@@ -20,9 +20,15 @@
                             <td>{{pessoa.dataNascimento | date:'dd/MM/yyyy'}}</td>
                             <td>{{pessoa.email}}</td>
                             <td>
-                                <button class="btn btn-warning" data-toggle="modal" data-target="#exampleModalLong" (click)="buscarPorId(pessoa.id)">Editar</button>
-                                <button class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong" (click)="buscarPorId(pessoa.id)">Detalhes</button>
-                                <button class="btn btn-danger" (click)="excluir(pessoa.id)">Excluir</button>
+                                <button class="btn btn-warning btn-edit" data-toggle="modal" data-target="#exampleModalLong" (click)="buscarPorId(pessoa.id,false)">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong" (click)="buscarPorId(pessoa.id,true)">
+                                    <i class="fa fa-info"></i>
+                                </button>
+                                <button class="btn btn-danger" (click)="excluir(pessoa.id)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -34,4 +40,5 @@
         </div>
     </div>
 </div>
-<pessoa-cadastro [pessoa]="pessoa" (pessoaSalva)="buscarPessoas($event)"></pessoa-cadastro>
+<pessoa-cadastro #cadastroPessoa [pessoa]="pessoa" (pessoaSalva)="buscarPessoas($event)"></pessoa-cadastro>
+<scg-loading-indicator></scg-loading-indicator>

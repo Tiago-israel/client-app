@@ -1,6 +1,8 @@
+import { LoadingIndicatorService } from './../../../utils/loading-indicator/loading-indicator.service';
 import { Pessoa } from './../../models/pessoa.model';
 import { PessoaService } from './../../pessoa.service';
 import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -12,12 +14,20 @@ export class PessoaCadastroComponent implements OnInit {
 
     @Output("pessoaSalva") public pessoaSalva: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input("pessoa") public pessoa: Pessoa = new Pessoa();
+    
+
+    public isDetalhe: boolean = false;
 
     ngOnInit(): void { }
 
-    constructor(private pessoaService: PessoaService) { }
+    constructor(
+        private pessoaService: PessoaService,
+        private loadingIndicatorService: LoadingIndicatorService
+    ) { }
 
     public salvar(): void {
+        this.loadingIndicatorService.show();
+        this.tratarData();
         if (!this.pessoa.id) {
             this.novaPessoa();
         } else {
@@ -34,6 +44,7 @@ export class PessoaCadastroComponent implements OnInit {
                 this.pessoaSalva.emit(false);
             },
             () => {
+                this.loadingIndicatorService.hide();
                 this.pessoaSalva.emit(true);
             }
         )
@@ -48,8 +59,14 @@ export class PessoaCadastroComponent implements OnInit {
                 this.pessoaSalva.emit(false);
             },
             () => {
+                this.loadingIndicatorService.hide();
                 this.pessoaSalva.emit(true);
             }
         )
     }
+
+    private tratarData(): void {
+        this.pessoa.dataNascimento = new Date(this.pessoa.dataNascimentoStr);
+    }
+
 }

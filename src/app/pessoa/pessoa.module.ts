@@ -1,3 +1,4 @@
+import { LoadingIndicatorModule } from './../utils/loading-indicator/loading-indicator.module';
 import { PessoaService } from './pessoa.service';
 import { ListagemPessoasComponent } from './components/listagem/listagem-pessoas.component';
 import { NgModule } from "@angular/core";
@@ -14,7 +15,8 @@ import { PessoasRoutingModule } from './pessoa.routing';
     imports: [
         CommonModule,
         FormsModule,
-        PessoasRoutingModule
+        PessoasRoutingModule,
+        LoadingIndicatorModule
     ],
     providers: [
         PessoaService
